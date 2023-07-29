@@ -5,6 +5,9 @@ public class Task1 {
         // Add "Hello wolrd!"
         System.out.println("Hello wolrd");
         // Добавил "Hello wolrd!" на русском
-        System.out.println("Привет мир!"); 
+        System.out.printf("""
+                Измененеие
+                Выаода!
+                """);
     }
 }
