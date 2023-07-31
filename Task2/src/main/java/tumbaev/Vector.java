@@ -1,6 +1,8 @@
 package tumbaev;
 
-import static java.lang.Math.*;
+import static java.lang.Math.abs;
+import static java.lang.Math.random;
+import static java.lang.Math.sqrt;
 
 public class Vector {
     private final double x;
@@ -49,7 +51,7 @@ public class Vector {
      * @return результат скалярного произведения
      */
     public double scalarProduct(Vector vector) {
-        return x * vector.getX() + y * vector.getY() + z * vector.getZ();
+        return this.x * vector.getX() + this.y * vector.getY() + this.z * vector.getZ();
     }
 
     /**
@@ -60,9 +62,9 @@ public class Vector {
      */
     public Vector vectorProduct(Vector vector) {
         return new Vector(
-                y * vector.getZ() - z * vector.getY(),
-                z * vector.getX() - x * vector.getZ(),
-                x * vector.getY() - y * vector.getX()
+                this.y * vector.getZ() - this.z * vector.getY(),
+                this.z * vector.getX() - this.x * vector.getZ(),
+                this.x * vector.getY() - this.y * vector.getX()
         );
     }
 
@@ -73,7 +75,7 @@ public class Vector {
      * @return косинус угла между данным и переданным векторами
      */
     public double cos(Vector vector) {
-        return scalarProduct(vector) / abs(length()) * abs(vector.length());
+        return scalarProduct(vector) / abs(this.length()) * abs(vector.length());
     }
 
     /**
@@ -84,9 +86,9 @@ public class Vector {
      */
     public Vector plus(Vector vector) {
         return new Vector(
-                x + vector.getX(),
-                y + vector.getY(),
-                z + vector.getZ()
+                this.x + vector.getX(),
+                this.y + vector.getY(),
+                this.z + vector.getZ()
         );
     }
 
@@ -98,9 +100,9 @@ public class Vector {
      */
     public Vector minus(Vector vector) {
         return new Vector(
-                x - vector.getX(),
-                y - vector.getY(),
-                z - vector.getZ()
+                this.x - vector.getX(),
+                this.y - vector.getY(),
+                this.z - vector.getZ()
         );
     }
 
@@ -108,6 +110,7 @@ public class Vector {
     /**
      * Возвращает строковое представление вектора.
      * Количество цифр после запятой в координатах ограничено до 4
+     *
      * @return строковое представление вектора
      */
     @Override
