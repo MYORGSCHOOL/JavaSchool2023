@@ -108,7 +108,7 @@ public class Vector {
         System.out.println("Сумма векторов: " + Arrays.toString(getSumm(a, b)));
         System.out.println("Разность векторов: " + Arrays.toString(getDifference(a, b)));
         System.out.println("Массив случайных векторов:");
-        Vector[] vectors = generate(4);
+        Vector[] vectors = generate(3);
         for (int i = 0; i < vectors.length; i++) {
             System.out.println(vectors[i].x + " " + vectors[i].y + " " + vectors[i].z);
         }
