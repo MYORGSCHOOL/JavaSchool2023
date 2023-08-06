@@ -1,6 +1,5 @@
 package kashuba;
 
-
 import java.util.Arrays;
 
 public class Queue {

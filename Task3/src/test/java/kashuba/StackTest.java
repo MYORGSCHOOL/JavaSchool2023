@@ -1,6 +1,5 @@
 package kashuba;
 
-
 import java.util.EmptyStackException;
 
 import org.junit.jupiter.api.DisplayName;
