@@ -1,6 +1,5 @@
 package grossu;
 
-
 import java.util.Arrays;
 import java.util.EmptyStackException;
 
@@ -8,14 +7,12 @@ import java.util.EmptyStackException;
  * Класс Stack реализует ограниченный массив объектов, построенному в виде стека по протоколу LIFO
  */
 public class Stack {
+    private static final int DEFAULT_STACK_CAPACITY = 10;
     /**
      * Поле для хранения стека объектов
      */
-    private final Object[] stack;
-    /**
-     * Максимальное число объектов в стеке
-     */
-    private final int maxCount;
+    private Object[] stackArray;
+
     /**
      * Указатель на верхний элемент стека
      */
@@ -23,30 +20,33 @@ public class Stack {
 
     public Stack(int maxCount) {
         if (maxCount >= 0) {
-            this.maxCount = maxCount;
-            this.stack = new Object[this.maxCount];
+            this.stackArray = new Object[maxCount];
             this.top = -1;
         } else {
             throw new NegativeArraySizeException();
         }
     }
 
+    public Stack() {
+        this(DEFAULT_STACK_CAPACITY);
+    }
+
     public Object[] toArray() {
-        return stack.clone();
+        return stackArray.clone();
     }
 
     /**
      * Функция добавляет элемент в стек сверху
+     * Если стек переполнен, то емкость размер стека увеличивается
      *
      * @param o элемент, который необходимо добавить в стек
-     * @throws IndexOutOfBoundsException, если стек будет переполнен
      */
     public void push(Object o) {
-        if (top != maxCount) {
+        if (top != stackArray.length - 1) {
             top++;
-            stack[top] = o;
+            stackArray[top] = o;
         } else {
-            throw new IndexOutOfBoundsException(top);
+            increaseCapacity();
         }
     }
 
@@ -58,8 +58,8 @@ public class Stack {
      */
     public Object pop() {
         if (!this.isEmpty()) {
-            Object temp = stack[top];
-            stack[top] = null;
+            Object temp = stackArray[top];
+            stackArray[top] = null;
             top--;
             return temp;
         } else {
@@ -83,9 +83,16 @@ public class Stack {
      */
     public Object top() {
         if (!this.isEmpty()) {
-            return stack[top];
+            return stackArray[top];
         }
         return null;
+    }
+
+    private void increaseCapacity() {
+        int newCapacity = stackArray.length + (stackArray.length >> 1);
+        Object[] newStackArray = new Object[newCapacity];
+        System.arraycopy(stackArray, 0, newStackArray, 0, stackArray.length);
+        stackArray = newStackArray;
     }
 
     /**
@@ -96,9 +103,7 @@ public class Stack {
     @Override
     public String toString() {
         return "Stack{" +
-                "stack=" + Arrays.toString(stack) +
-                ", maxCount=" + maxCount +
-                ", top=" + top +
+                "stackArray=" + Arrays.toString(stackArray) +
                 '}';
     }
 }
