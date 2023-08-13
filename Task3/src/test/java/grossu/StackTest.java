@@ -23,8 +23,8 @@ public class StackTest {
 
     @Test
     @DisplayName("checking that the function - push works correctly when stack is full")
-    void testGetTrowPushWhenStackIsFull() {
-        Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
+    void testDoesNotTrowPushWhenStackIsFull() {
+        Assertions.assertDoesNotThrow(() -> {
             Stack actual = new Stack(2);
             for (int i = 0; i < 3; i++) {
                 actual.push(new Object());
