@@ -1,5 +1,6 @@
 package druzhinin;
 
+import java.util.ArrayList;
 import java.util.EmptyStackException;
 
 /**
@@ -9,9 +10,14 @@ import java.util.EmptyStackException;
  */
 public class Stack {
     /**
+     * Базовая емкость массива элементов стека.
+     */
+    private static final int BASE_CAPACITY = 16;
+
+    /**
      * Массив объектов (элементов), находящихся в стеке.
      */
-    private final Object[] stackArray;
+    private Object[] stackArray;
 
     /**
      * Индекс верхнего элемента в стеке.
@@ -35,18 +41,49 @@ public class Stack {
         topIndex = -1;
     }
 
+    public Stack() {
+        this(BASE_CAPACITY);
+    }
+
     /**
      * Метод для вставки элемента на верх стека.
+     * При переполнении массива элементов стека емкость массива увеличивается в 1.5 раза.
      *
      * @param newElement Новый элемент.
-     * @throws IndexOutOfBoundsException при попытке вставки элемента в заполненный стек.
      */
     public void push(Object newElement) {
         if (topIndex == stackArray.length - 1) {
-            throw new IndexOutOfBoundsException(topIndex + 1);
+            grow();
         }
 
         stackArray[++topIndex] = newElement;
+    }
+
+    /**
+     * Метод для увеличения емкости массива элементов стека.
+     *
+     * @param newCapacity Новая емкость. Не может быть меньше текущей емкости.
+     * @throws IllegalArgumentException при передаче
+     * {@code newCapacity} меньше, чем текущая емкость массива.
+     */
+    private void grow(int newCapacity) {
+        if (newCapacity < stackArray.length) {
+            throw new IllegalArgumentException("New capacity of array cannot be less than current");
+        }
+
+        Object[] increasedStackArray = new Object[newCapacity];
+        System.arraycopy(stackArray, 0, increasedStackArray, 0, stackArray.length);
+        stackArray = increasedStackArray;
+    }
+
+    /**
+     * Метод для увеличения емкости массива элементов стека.<br/>
+     * По умолчанию увеличивает размер массива следующим образом:<br/>
+     * Если текущая емкость массива - четное число, то она увеличивается в 1.5 раза.<br/>
+     * Если нечетное - увеличивается на число: (текущая емкость - 1) / 2.
+     */
+    private void grow() {
+        grow(stackArray.length + (stackArray.length >> 1));
     }
 
     /**
