@@ -4,18 +4,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
+import java.util.NoSuchElementException;
+
 /**
  * Класс тестирования циклической очереди
  */
 public class CircularQueueTest {
-    /**
-     * Код возврата ошибки
-     */
-    private static final int ERROR_CODE = -1;
-    /**
-     * Код возврата при успешном выполнении функции
-     */
-    private static final int SUCCESS_CODE = 1;
     /**
      * максимальный размер очереди
      */
@@ -25,18 +19,25 @@ public class CircularQueueTest {
     @DisplayName("Тест на успешное добавление элемента в очередь")
     public void testSuccessEnqueueOneElement() {
         CircularQueue circularQueue = new CircularQueue(MAX_SIZE);
-        Assertions.assertEquals(SUCCESS_CODE, circularQueue.enqueue(55));
+        circularQueue.enqueue(123);
+        Assertions.assertEquals(123, circularQueue.top());
     }
 
     @Test
     @DisplayName("Тест на успешное добавление элемента в очередь в начало массива на место удаленного элемента")
     public void testSuccessCircularEnqueueStartArrayOneElement() {
+        Object[] checkArray = new Object[5];
         CircularQueue circularQueue = new CircularQueue(MAX_SIZE);
         for (int i = 0; i != MAX_SIZE; i++) {
+            if (i != 0) {
+                checkArray[i] = i;
+            }
             circularQueue.enqueue(i);
         }
         circularQueue.dequeue();
-        Assertions.assertEquals(SUCCESS_CODE, circularQueue.enqueue(MAX_SIZE));
+        circularQueue.enqueue(MAX_SIZE);
+        checkArray[0] = MAX_SIZE;
+        Assertions.assertArrayEquals(checkArray, circularQueue.getAll());
     }
 
     @Test
@@ -46,24 +47,28 @@ public class CircularQueueTest {
         for (int i = 0; i != MAX_SIZE; i++) {
             circularQueue.enqueue(i);
         }
-        Assertions.assertEquals(ERROR_CODE, circularQueue.enqueue(MAX_SIZE));
+        Assertions.assertThrows(IllegalStateException.class, () -> circularQueue.enqueue(MAX_SIZE));
     }
 
     @Test
     @DisplayName("Тест на успешное удаление элемента из очереди")
     public void testSuccessDequeueOneElement() {
+        int i;
         CircularQueue circularQueue = new CircularQueue(MAX_SIZE);
-        for (int i = 0; i != MAX_SIZE; i++) {
+        for (i = 0; i != MAX_SIZE; i++) {
             circularQueue.enqueue(i);
         }
-        Assertions.assertEquals(SUCCESS_CODE, circularQueue.dequeue());
+        i = 0;
+        Assertions.assertEquals(i, circularQueue.top());
+        circularQueue.dequeue();
+        Assertions.assertEquals(++i, circularQueue.top());
     }
 
     @Test
     @DisplayName("Тест на неудачную попытку удаления элемента из очереди")
     public void testFailDequeueOneElement() {
         CircularQueue circularQueue = new CircularQueue(MAX_SIZE);
-        Assertions.assertEquals(ERROR_CODE, circularQueue.dequeue());
+        Assertions.assertThrows(NoSuchElementException.class, () -> circularQueue.dequeue());
     }
 
     @Test
@@ -95,6 +100,6 @@ public class CircularQueueTest {
     @DisplayName("Тест на неудачную попытку получения первого элемента очереди")
     public void testFailQueueGetFirstElement() {
         CircularQueue circularQueue = new CircularQueue(MAX_SIZE);
-        Assertions.assertEquals(null, circularQueue.top());
+        Assertions.assertThrows(NoSuchElementException.class, () -> circularQueue.top());
     }
 }

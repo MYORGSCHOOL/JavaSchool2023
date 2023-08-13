@@ -1,66 +1,58 @@
 package pozdnyakova;
 
+import java.util.Arrays;
+import java.util.EmptyStackException;
+
 /**
  * Класс, реализующий стек на массиве Object
  */
 public class Stack {
     /**
-     * Код возврата ошибки
+     * число, на сколько элементов происходит расширение массива
      */
-    private static final int ERROR_CODE = -1;
-    /**
-     * Код возврата при успешном выполнении функции
-     */
-    private static final int SUCCESS_CODE = 1;
+    private final static int CHANGE_SIZE = 10;
     /**
      * массив для хранения элементов стека
      */
-    private final Object array[];
-    /**
-     * максимальный возможный размер стека
-     */
-    private final int maxSize;
+    private Object array[];
     /**
      * индекс вершины стека
      */
     private int top;
 
-    public Stack(int maxSize) {
-        array = new Object[maxSize];
-        this.maxSize = maxSize;
+    public Stack() {
+        array = new Object[CHANGE_SIZE];
         this.top = -1;
     }
 
     /**
-     * Метод для вставки элемента в стек сверху
+     * Метод для вставки элемента в стек сверху, при необходимости расширяет массив стека
      *
      * @param object элемент, который нужно вставить
-     * @return 1 - если удалось вставить элемент
-     * -1 - если не удалось вставить из-за того, что стек достиг максимального размера
      */
-    public int push(Object object) {
-        if (top == maxSize - 1) {
-            return ERROR_CODE;
-        } else {
-            top++;
-            array[top] = object;
-            return SUCCESS_CODE;
+    public void push(Object object) {
+        if (top == array.length - 1) {
+            Object[] newArray = new Object[array.length + CHANGE_SIZE];
+            System.arraycopy(array, 0, newArray, 0, top + 1);
+            array = newArray;
         }
+        top++;
+        array[top] = object;
     }
 
     /**
      * Метод для удаления элемента из стека
      *
      * @return удаленный элемент - если стек не пустой
-     * null - если стек пустой
      */
     public Object pop() {
-        if (isEmpty()) return null;
-        else {
+        if (!isEmpty()) {
             Object topStack = array[top];
             array[top] = null;
             --top;
             return topStack;
+        } else {
+            throw new EmptyStackException();
         }
     }
 
@@ -78,13 +70,26 @@ public class Stack {
      * Метод, позволяющий получить объект с вершины стека без его удаления
      *
      * @return объект с вершины стека - если стек не пустой
-     * null - если стек пустой
      */
     public Object top() {
-        if (isEmpty()) return null;
-        else {
+        if (!isEmpty()) {
             return array[top];
+        } else {
+            throw new EmptyStackException();
         }
+    }
+
+    /**
+     * Метод получения объектов стека
+     *
+     * @return копия массива стека
+     */
+    public Object[] getAll() {
+        int size = 0;
+        while (size != array.length && array[size] != null) {
+            size++;
+        }
+        return Arrays.copyOf(array, size);
     }
 }
 
