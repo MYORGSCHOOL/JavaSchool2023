@@ -1,5 +1,7 @@
 package tsimmer;
 
+import java.util.Arrays;
+
 /**
  * Реализует набор методов для Stack
  */
@@ -7,27 +9,23 @@ public class Stack {
     /**
      * Максимальный размер стека
      */
-    private final int maxSize;
+    private final int PRIMARY_SIZE = 3;
     /**
      * Массив объектов
      */
-    private final Object[] stackArray;
+    private Object[] stackArray;
     /**
      * Верхний элемент стека
      */
     private int top;
-    /**
-     * Значение которое возвращает метод в случае ошибки
-     */
-    private static final int RETURN_ERR = -1;
+
     /**
      * Значение которое возвращает метод в случае успешного выполнения
      */
     private static final int RETURN_SUCCESS = 1;
 
-    public Stack(int size) {
-        maxSize = size;
-        stackArray = new Object[maxSize];
+    public Stack() {
+        stackArray = new Object[PRIMARY_SIZE];
         top = -1;
     }
 
@@ -40,10 +38,13 @@ public class Stack {
      * @return -1 если ошибка вставки и 1 если вставка прошла успешно
      */
     public Object push(Object item) {
-        if (isFull()) {
-            System.out.println("Стек полон. Невозможно добавить элемент.");
-            return RETURN_ERR;
+
+        if (stackArray.length == PRIMARY_SIZE) {
+            Object[] newArr = new Object[2 * PRIMARY_SIZE];
+            System.arraycopy(stackArray, 0, newArr, 0, top + 1);
+            stackArray = newArr;
         }
+
         stackArray[++top] = item;
         return RETURN_SUCCESS;
     }
@@ -92,7 +93,18 @@ public class Stack {
      * @return true, если стек полон
      */
     public boolean isFull() {
-        return (top == maxSize - 1);
+        return (top == PRIMARY_SIZE - 1);
+    }
+
+    public Object[] getAll() {
+
+        int size = 0;
+        for (int i = 0; i < stackArray.length; i++) {
+            if (stackArray[size] != null) {
+                size++;
+            }
+        }
+        return Arrays.copyOf(stackArray, size);
     }
 
 }
