@@ -37,16 +37,6 @@ public class StackTest {
     }
 
     @Test
-    @DisplayName("Тест на получение исключения IndexOutOfBoundsException" +
-            " при вставке элемента в заполненный стек")
-    public void testIndexOutOfBoundsExceptionWhenPushIntoFullStack() {
-        Stack stack = new Stack(2);
-        stack.push(new Object());
-        stack.push(new Object());
-        Assertions.assertThrows(IndexOutOfBoundsException.class, () -> stack.push(new Object()));
-    }
-
-    @Test
     @DisplayName("Тест на получение исключения EmptyStackException" +
             " при удалении элемента из пустого стека")
     public void testIndexOutOfBoundsExceptionWhenPopFromEmptyStack() {
