@@ -3,9 +3,10 @@ package sevostyanov;
 import java.util.Random;
 
 public class Vector {
-    int x;
-    int y;
-    int z;
+    private final  int y;
+    private final   int x;
+    private final  int z;
+    static final int GENERATES_RANDOM_NUMBER  = 1000;
 
     public Vector(int x, int y, int z) {
         this.x = x;
@@ -96,7 +97,7 @@ public class Vector {
         Random random = new Random();
 
         for (int i = 0; i < n; i++) {
-            arrVector[i] = new Vector(random.nextInt(312), random.nextInt(312), random.nextInt(312));
+            arrVector[i] = new Vector(random.nextInt(GENERATES_RANDOM_NUMBER), random.nextInt(GENERATES_RANDOM_NUMBER), random.nextInt(GENERATES_RANDOM_NUMBER));
         }
         return arrVector;
     }
