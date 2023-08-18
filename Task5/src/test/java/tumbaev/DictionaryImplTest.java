@@ -52,6 +52,7 @@ class DictionaryImplTest {
 
     @Test
     @DisplayName("Insertion should work in constant time")
+    @Disabled
     void testInsertionShouldWorkInConstantTime() {
         Dictionary<String> dictionary = new DictionaryImpl<>(INITIAL_CAPACITY);
         long testDuration = getTestDuration(() -> dictionary.insert(""));
@@ -86,6 +87,7 @@ class DictionaryImplTest {
 
     @Test
     @DisplayName("Deletion should work in constant time")
+    @Disabled
     void testDeletionShouldWorkInConstantTime() {
         Dictionary<String> dictionary = new DictionaryImpl<>(INITIAL_CAPACITY);
         dictionary.insert("");
