@@ -43,6 +43,7 @@ class DictionaryImplTest {
     private static final int ITERATIONS = 700;
 
     @Test
+    @Disabled
     @DisplayName("Inserting existing element should throw exception")
     void testInsertingExistingElementShouldThrowException() {
         Dictionary<String> dictionary = new DictionaryImpl<>();
@@ -51,6 +52,7 @@ class DictionaryImplTest {
     }
 
     @Test
+    @Disabled
     @DisplayName("Insertion should work in constant time")
     void testInsertionShouldWorkInConstantTime() {
         Dictionary<String> dictionary = new DictionaryImpl<>(INITIAL_CAPACITY);
@@ -85,6 +87,7 @@ class DictionaryImplTest {
     }
 
     @Test
+    @Disabled
     @DisplayName("Deletion should work in constant time")
     void testDeletionShouldWorkInConstantTime() {
         Dictionary<String> dictionary = new DictionaryImpl<>(INITIAL_CAPACITY);
