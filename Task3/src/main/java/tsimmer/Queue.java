@@ -1,5 +1,7 @@
 package tsimmer;
 
+import java.util.Arrays;
+
 /**
  * Реализует набор методов для Queue
  */
@@ -110,6 +112,17 @@ public class Queue {
      */
     public boolean isFull() {
         return (currentSize == maxSize);
+    }
+
+    public Object[] getAll() {
+
+        int size = 0;
+        for (int i = 0; i < queueArray.length; i++) {
+            if (queueArray[size] != null) {
+                size++;
+            }
+        }
+        return Arrays.copyOf(queueArray, size);
     }
 
 }
