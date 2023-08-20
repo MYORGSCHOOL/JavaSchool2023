@@ -3,25 +3,27 @@ package savinskiy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class MyStackTest {
-    private MyStack stack;
+public class StackTest {
+    private Stack stack;
 
     @BeforeEach
     public void init() {
-        stack = new MyStack(4);
+        stack = new Stack();
     }
 
     @Test
     public void testPush() {
-        stack.push("1");
-        stack.push("2");
-        stack.push("3");
+        for (int i = 0; i < 100000; i++) {
+            stack.push(i);
+        }
 
-        assertEquals("3", stack.pop());
-        assertEquals("2", stack.pop());
-        assertEquals("1", stack.pop());
+        for (int i = 99999; i == 0; i--) {
+            assertEquals(i, stack.pop());
+        }
     }
 
     @Test

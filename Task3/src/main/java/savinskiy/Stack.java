@@ -1,32 +1,36 @@
 package savinskiy;
 
+import java.util.Arrays;
+
 /**
  * Класс Стэк
  */
-public class MyStack {
+public class Stack {
     /**
      * Массив для хранения элементов стэка
      */
-    private final Object[] stack;
+    private Object[] stack;
     /**
      * Верхний элемент стэка
      */
     private int top;
+    /**
+     * Объем стэка по умолчанию
+     */
+    private static final int CAPACITY = 5;
 
-    public MyStack(int capacity) {
-        this.stack = new Object[capacity];
+    public Stack() {
+        this.stack = new Object[CAPACITY];
         this.top = -1;
     }
 
     /**
-     * Метод вставляет элемент на вершину стэка
+     * Метод вставляет элемент на вершину стэка и увеличивает объем при необходимости
      *
      * @param element который будет вствавлен в вершину
      */
     public void push(Object element) {
-        if (isFull()) {
-            throw new IllegalStateException("Стэк заполнен");
-        }
+        increaseCapacity(top + 2);
         stack[++top] = element;
     }
 
@@ -54,15 +58,6 @@ public class MyStack {
     }
 
     /**
-     * Метод проверяет полон ли стэк
-     *
-     * @return true - если стэк заполнен, либо false
-     */
-    public boolean isFull() {
-        return top == stack.length - 1;
-    }
-
-    /**
      * Метод возвращает верхний элемент без удалания
      *
      * @return верхний элемент
@@ -80,8 +75,18 @@ public class MyStack {
      * @return копию массива объектов
      */
     public Object[] getAll() {
-        Object[] allElements = new Object[top + 1];
-        System.arraycopy(stack, 0, allElements, 0,  top + 1);
-        return allElements;
+        return Arrays.copyOfRange(stack, 0, top + 1);
+    }
+
+    /**
+     * Метод увеличивает объем массива
+     *
+     * @param requiredCapacity размер массива
+     */
+    private void increaseCapacity(int requiredCapacity) {
+        if (requiredCapacity > stack.length) {
+            int increasedCapacity = stack.length * 2;
+            stack = Arrays.copyOf(stack, Math.max(increasedCapacity, requiredCapacity));
+        }
     }
 }

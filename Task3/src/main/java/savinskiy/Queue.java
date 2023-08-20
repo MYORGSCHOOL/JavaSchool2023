@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * Класс Очередь (кольцевая)
  */
-public class MyQueue {
+public class Queue {
     /**
      * Массив для хранения элементов очереди
      */
@@ -23,7 +23,7 @@ public class MyQueue {
      */
     private int size;
 
-    public MyQueue(int capacity) {
+    public Queue(int capacity) {
         this.queue = new Object[capacity];
         this.front = 0;
         this.rear = -1;
@@ -61,7 +61,6 @@ public class MyQueue {
         return element;
     }
 
-
     /**
      * Метод проверяет пуста ли очередь
      *
@@ -70,7 +69,6 @@ public class MyQueue {
     public boolean isEmpty() {
         return size == 0;
     }
-
 
     /**
      * Метод возвращает первый элемент очереди
