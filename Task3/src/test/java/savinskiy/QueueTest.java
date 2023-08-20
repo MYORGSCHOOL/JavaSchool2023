@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -74,19 +75,11 @@ public class QueueTest {
         queue.enqueue(3);
         queue.enqueue(4);
 
-        try {
-            queue.enqueue(5);
-        } catch (IllegalStateException e) {
-            assertTrue(true);
-        }
+        assertThrows(IllegalStateException.class, () -> queue.enqueue(5));
     }
 
     @Test
     public void testDequeEmptyQueue() {
-        try {
-            queue.deque();
-        } catch (IllegalStateException e) {
-            assertTrue(true);
-        }
+        assertThrows(IllegalStateException.class, queue::deque);
     }
 }

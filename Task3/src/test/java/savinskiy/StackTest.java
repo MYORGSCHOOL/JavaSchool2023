@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -21,7 +22,7 @@ public class StackTest {
             stack.push(i);
         }
 
-        for (int i = 99999; i == 0; i--) {
+        for (int i = 99999; i > 0; i--) {
             assertEquals(i, stack.pop());
         }
     }
@@ -81,19 +82,11 @@ public class StackTest {
 
     @Test
     public void testPopEmptyStack() {
-        try {
-            stack.pop();
-        } catch (IllegalStateException e) {
-            assertTrue(true);
-        }
+        assertThrows(IllegalStateException.class, stack::pop);
     }
 
     @Test
     public void testTopEmptyStack() {
-        try {
-            stack.top();
-        } catch (IllegalStateException e) {
-            assertTrue(true);
-        }
+        assertThrows(IllegalStateException.class, stack::top);
     }
 }
