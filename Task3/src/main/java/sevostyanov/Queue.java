@@ -10,7 +10,7 @@ public class Queue {
      */
     private Object[] queueArray;
     /**
-     * Индекс первого элемент в очереди
+     * Индекс первого элемента в очереди
      */
     private int front;
     /**
@@ -50,21 +50,19 @@ public class Queue {
 
     /**
      * Метод добавляет элемент в конец очереди, если очередь
-     * звполнена выводит в терминальный вывод очередь полна , если очередь свободна
+     * звполнена выводит в терминальный вывод очередь полна, если очередь свободна
      * добавлет элемент в конец
      *
      * @param item Елемент который будет добавлен
      */
     public void enqueue(Object item) {
-        if (isFull()) {
-            System.out.println("Очередь полна. Невозможно добавить элемент.");
-            return;
+        if (rear == queueArray.length - 1) {
+            System.out.println("Очередь полна, сработало авторасширение");
+            expandQueue();
+        } else {
+            queueArray[++rear] = item;
+            currentSize++;
         }
-        if (rear == maxSize - 1) {
-            rear = -1;
-        }
-        queueArray[++rear] = item;
-        currentSize++;
     }
 
     /**
@@ -102,5 +100,21 @@ public class Queue {
             return null;
         }
         return queueArray[front];
+    }
+
+    /**
+     * Этот метод expandqueue() увеличивает размер массива queuearray в два раза.
+     * Первая строка определяет новый размер массива newsize, который равен удвоенной текущей длине queuearray.
+     * Во второй строке создается новый массив newarray типа object с размером newsize.
+     * Затем в цикле for каждый элемент из queuearray копируется в новый массив newarray.
+     * В конце метода queuearray присваивается значение нового массива newarray.
+     */
+    private void expandQueue() {
+        int newSize = queueArray.length * 2;
+        Object[] newArray = new Object[newSize];
+        for (int i = 0; i < queueArray.length; i++) {
+            newArray[i] = queueArray[i];
+        }
+        queueArray = newArray;
     }
 }

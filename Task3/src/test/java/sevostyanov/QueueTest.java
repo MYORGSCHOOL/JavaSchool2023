@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 public class QueueTest {
     @Test
-    @DisplayName("Тест на добавление элемента в очередь ")
+    @DisplayName("РўРµСЃС‚ РЅР° РґРѕР±Р°РІР»РµРЅРёРµ СЌР»РµРјРµРЅС‚Р° РІ РѕС‡РµСЂРµРґСЊ")
     public void testEnqueue() {
         Queue queue = new Queue(7);
         queue.enqueue(1);
@@ -14,21 +14,21 @@ public class QueueTest {
     }
 
     @Test
-    @DisplayName("Тест на удаление элемента из очереди")
+    @DisplayName("РўРµСЃС‚ РЅР° СѓРґР°Р»РµРЅРёРµ СЌР»РµРјРµРЅС‚Р° РёР· РѕС‡РµСЂРµРґРё")
     public void testSuccessDequeueOneElement() {
         Queue queue = new Queue(7);
         Assertions.assertEquals(-1, queue.dequeue());
     }
 
     @Test
-    @DisplayName("Тест на проверку пустой очереди")
+    @DisplayName("РўРµСЃС‚ РЅР° РїСЂРѕРІРµСЂРєСѓ РїСѓСЃС‚РѕР№ РѕС‡РµСЂРµРґРё")
     public void testEmptyQueueCheck() {
         Queue queue = new Queue(7);
         Assertions.assertTrue(queue.isEmpty());
     }
 
     @Test
-    @DisplayName("Тест на проверку полной очереди")
+    @DisplayName("РўРµСЃС‚ РЅР° РїСЂРѕРІРµСЂРєСѓ РїРѕР»РЅРѕР№ РѕС‡РµСЂРµРґРё")
     public void testFullQueueCheck() {
         Queue queue = new Queue(7);
         Assertions.assertFalse(queue.isFull());
