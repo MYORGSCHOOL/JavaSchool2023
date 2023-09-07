@@ -19,6 +19,9 @@ public class DataLoader {
      * @param <V>    - Значение неизвестного типа
      */
     public static <K, V> void loadConfigFromMap(Object object, Map<K, V> map) {
+        if (object == null || map == null || map.isEmpty()) {
+            throw new RuntimeException("На вход переданы пустые параметры");
+        }
         Set<K> keySet = map.keySet();
         for (K k : keySet) {
             try {
@@ -26,7 +29,7 @@ public class DataLoader {
                 field.setAccessible(true);
                 field.set(object, map.get(k));
             } catch (IllegalAccessException | NoSuchFieldException e) {
-                throw new RuntimeException(k.toString());
+                throw new RuntimeException(e);
             }
         }
     }
