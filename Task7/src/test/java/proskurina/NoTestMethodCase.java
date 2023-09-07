@@ -1,0 +1,4 @@
+package proskurina;
+
+class NoTestMethodCase {
+}
