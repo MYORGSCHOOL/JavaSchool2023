@@ -8,13 +8,12 @@ import java.util.TreeMap;
 public class Vector {
     private Map<Character, Double> coordinates = new TreeMap<>();
 
-    Vector(Double x, Double y, Double z) {
+    public Vector(Double x, Double y, Double z) {
         coordinates.put('x', x);
         coordinates.put('y', y);
         coordinates.put('z', z);
     }
 
-    // [x]: Статический метод, который принимает целое число N, и возвращает массив случайных векторов размером N
     /**
      * Метод, генерирующий список с заданным кол-вом 3-мерных векторов (Случайные координаты)
      * @param count Колличество векторов
