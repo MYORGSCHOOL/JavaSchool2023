@@ -40,7 +40,6 @@ public class Task2 {
 
             switch (choice) {
                 case 1:
-                // TODO: Длинна вектора
                     System.out.print("Выберите вектор:>> ");
                     int vChoice = in.nextInt();
 
@@ -52,32 +51,27 @@ public class Task2 {
                     break;
                 
                 case 2:
-                // TODO: Скалярное произведение веткторов
                     result = String.format("%.3f", met.scalarProduct(v1, v2));
                     System.out.println("Скалярное произведение векторов = " + result);
                     System.out.printf("\n\n");
                     break;
                 
                 case 3:
-                // TODO: Векторное произведение
                     System.out.println("Векторное произведение = " + met.vectorProduct(v1, v2));
                     break;
                 
                 case 4:
-                // TODO: Угол между векторами
                     result = String.format("%.3f", met.angleVectors(v1, v2));
                     System.out.println("Угол между векторами = " + result);
                     System.out.printf("\n\n");
                     break;
                 
                 case 5:
-                // TODO: Сумма векторов
                     System.out.println("Сумма векторов = " + met.amount(v1, v2));
                     System.out.printf("\n\n");
                     break;
                 
                 case 6:
-                // TODO: Разность
                     System.out.println("Разность векторов = " + met.difference(v1, v2));
                     System.out.printf("\n\n");
                     break;
