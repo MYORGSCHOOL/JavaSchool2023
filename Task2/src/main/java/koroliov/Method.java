@@ -2,7 +2,7 @@ package koroliov;
 
 public class Method {
     /**
-     * Метод, вычисляющий длину вектора. SQRT(X^2 + Y^2 + Z^2)
+     * Метод, вычисляющий длину вектора.
      * @param vector Конструктор Vector
      * @return double Длинна вектора
      */
@@ -11,7 +11,7 @@ public class Method {
     }
 
     /**
-     * Метод, вычисляющий скалярное произведение. X1 * X2 + Y1 * Y2 + Z1 * Z2
+     * Метод, вычисляющий скалярное произведение.
      * @param v1 Конструктор Vector
      * @param v2 Конструктор Vector
      * @return double Скалярная величина
