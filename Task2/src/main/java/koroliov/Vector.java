@@ -8,7 +8,7 @@ import java.util.TreeMap;
 public class Vector {
     private Map<Character, Double> coordinates = new TreeMap<>();
 
-    Vector(Double x, Double y, Double z) {
+    public Vector(Double x, Double y, Double z) {
         coordinates.put('x', x);
         coordinates.put('y', y);
         coordinates.put('z', z);
