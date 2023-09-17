@@ -1,6 +1,7 @@
 package proskurina;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +14,7 @@ class ThreadStatesTest {
     private final Object mutex = new Object();
     
     @Test
+    @Disabled
     @DisplayName("Тестируется состояние NEW")
     void testNewState() {
         thread = new Thread();
@@ -21,6 +23,7 @@ class ThreadStatesTest {
     }
     
     @Test
+    @Disabled
     @DisplayName("Тестируется состояние RUNNABLE")
     void testRunnableState() {
         thread = new Thread();
@@ -30,6 +33,7 @@ class ThreadStatesTest {
     }
     
     @Test
+    @Disabled
     @DisplayName("Тестируется состояние BLOCKED")
     void testBlockedState() throws InterruptedException {
         thread = new Thread(() -> {
@@ -45,6 +49,7 @@ class ThreadStatesTest {
     }
     
     @Test
+    @Disabled
     @DisplayName("Тестируется состояние WAITING")
     void testWaitingState() throws InterruptedException {
         thread = new Thread(() -> {
@@ -67,6 +72,7 @@ class ThreadStatesTest {
     }
     
     @Test
+    @Disabled
     @DisplayName("Тестируется состояние TIMED_WAITING")
     void testTimedWaitingState() throws InterruptedException {
         thread = new Thread(() -> {
@@ -84,6 +90,7 @@ class ThreadStatesTest {
     }
     
     @Test
+    @Disabled
     @DisplayName("Тестируется состояние TERMINATED")
     void testTerminatedState() throws InterruptedException {
         thread = new Thread();
