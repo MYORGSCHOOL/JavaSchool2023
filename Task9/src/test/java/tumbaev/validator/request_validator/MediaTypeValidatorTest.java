@@ -1,4 +1,4 @@
-package tumbaev.validtor.request_validator;
+package tumbaev.validator.request_validator;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpContext;
@@ -8,54 +8,52 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import tumbaev.backbone.util.constant.HttpHeader;
 import tumbaev.backbone.util.constant.Mime;
-import tumbaev.exception.UnsupportedMediaTypeException;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.URI;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MediaTypeValidatorTest {
     private final MediaTypeValidator mediaTypeValidator = new MediaTypeValidator();
 
     @Test
-    @DisplayName("Should not throw exception when Content-type contains application/json and Accept is not present")
-    void testShouldNotThrowExceptionWhenContentTypeContainsApplicationJsonAndAcceptIsNotPresent() {
+    @DisplayName("Should be empty when Content-type contains application/json and Accept is not present")
+    void testShouldBeEmptyWhenContentTypeContainsApplicationJsonAndAcceptIsNotPresent() {
         Headers headers = new Headers();
         headers.add(HttpHeader.CONTENT_TYPE.getName(), Mime.APPLICATION_JSON.getName());
-        assertDoesNotThrow(() -> mediaTypeValidator.validate(getMockHttpExchange(headers)));
+        assertTrue(mediaTypeValidator.validate(getMockHttpExchange(headers)).isEmpty());
     }
 
     @Test
-    @DisplayName("Should not throw exception when Content-type contains application/json and Accept contains application/json")
-    void testShouldNotThrowExceptionWhenContentTypeContainsApplicationJsonAndAcceptContainsApplicationJson() {
+    @DisplayName("Should be empty when Content-type contains application/json and Accept contains application/json")
+    void testShouldBeEmptyWhenContentTypeContainsApplicationJsonAndAcceptContainsApplicationJson() {
         Headers headers = new Headers();
         headers.add(HttpHeader.CONTENT_TYPE.getName(), Mime.APPLICATION_JSON.getName());
         headers.add(HttpHeader.ACCEPT.getName(), Mime.APPLICATION_JSON.getName());
-        assertDoesNotThrow(() -> mediaTypeValidator.validate(getMockHttpExchange(headers)));
+        assertTrue(mediaTypeValidator.validate(getMockHttpExchange(headers)).isEmpty());
     }
 
     @Test
-    void testShouldThrowExceptionWhenContentTypeIsNotPresent() {
+    void testShouldBePresentWhenContentTypeIsNotPresent() {
         Headers headers = new Headers();
-        assertThrows(UnsupportedMediaTypeException.class, () -> mediaTypeValidator.validate(getMockHttpExchange(headers)));
+        assertTrue(mediaTypeValidator.validate(getMockHttpExchange(headers)).isPresent());
     }
 
     @Test
-    void testShouldThrowExceptionWhenContentTypeIsNotApplicationJson() {
+    void testShouldBePresentWhenContentTypeIsNotApplicationJson() {
         Headers headers = new Headers();
         headers.add(HttpHeader.CONTENT_TYPE.getName(), Mime.TEXT_PLAIN.getName());
-        assertThrows(UnsupportedMediaTypeException.class, () -> mediaTypeValidator.validate(getMockHttpExchange(headers)));
+        assertTrue(mediaTypeValidator.validate(getMockHttpExchange(headers)).isPresent());
     }
 
     @Test
-    void testShouldThrowExceptionWhenAcceptPresentAndIsNotApplicationJson() {
+    void testShouldBePresentWhenAcceptPresentAndIsNotApplicationJson() {
         Headers headers = new Headers();
         headers.add(HttpHeader.ACCEPT.getName(), Mime.TEXT_PLAIN.getName());
-        assertThrows(UnsupportedMediaTypeException.class, () -> mediaTypeValidator.validate(getMockHttpExchange(headers)));
+        assertTrue(mediaTypeValidator.validate(getMockHttpExchange(headers)).isPresent());
     }
 
     /**

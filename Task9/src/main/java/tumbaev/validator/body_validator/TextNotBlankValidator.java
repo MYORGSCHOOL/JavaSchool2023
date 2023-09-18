@@ -1,4 +1,4 @@
-package tumbaev.validtor.body_validator;
+package tumbaev.validator.body_validator;
 
 import tumbaev.backbone.validator.body_validator.RequestBodyValidator;
 import tumbaev.dto.CheckBracketsRequest;

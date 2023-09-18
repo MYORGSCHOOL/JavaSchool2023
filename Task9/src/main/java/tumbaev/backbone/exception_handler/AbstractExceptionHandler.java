@@ -1,9 +1,7 @@
 package tumbaev.backbone.exception_handler;
 
 import tumbaev.backbone.ResponseEntity;
-import tumbaev.backbone.exception.JsonConversionException;
 import tumbaev.backbone.exception.UnsupportedExceptionTypeException;
-import tumbaev.backbone.util.JsonConverter;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.logging.Logger;
@@ -66,22 +64,5 @@ public class AbstractExceptionHandler<T extends Throwable> {
         }
         throw new UnsupportedExceptionTypeException(
                 String.format("Only %s is supported. Provided - %s", supportedExceptionClass.getName(), e.getClass().getName()));
-    }
-
-    /**
-     * Converts provided response to json string.
-     * <br/>
-     * If conversion fails, uses {@link ErrorResponse#toJson()}.
-     *
-     * @param response response to convert
-     * @return json representation of response
-     */
-    protected String errorResponseToJson(ErrorResponse response) {
-        try {
-            return JsonConverter.toJson(response);
-        } catch (JsonConversionException jce) {
-            logger.severe("Failed to convert error response to json, using toString(). Message: " + jce.getMessage());
-            return response.toJson();
-        }
     }
 }

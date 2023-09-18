@@ -1,4 +1,4 @@
-package tumbaev.validtor.request_validator;
+package tumbaev.validator.request_validator;
 
 import com.sun.net.httpserver.Authenticator;
 import com.sun.net.httpserver.Filter;
@@ -9,7 +9,6 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpPrincipal;
 import com.sun.net.httpserver.HttpServer;
 import org.junit.jupiter.api.Test;
-import tumbaev.exception.UnknownUriException;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -19,25 +18,24 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class UriValidatorTest {
     private final UriValidator uriValidator = new UriValidator();
 
     @Test
-    void testShouldNotThrowExceptionWhenUriIsCorrect() {
+    void testShouldBeEmptyWhenUriIsCorrect() {
         String uri = "my/uri";
         HttpExchange exchange = getMockHttpExchange(uri, uri);
-        assertDoesNotThrow(() -> uriValidator.validate(exchange));
+        assertTrue(uriValidator.validate(exchange).isEmpty());
     }
 
     @Test
-    void testShouldThrowExceptionWhenUrisDoNotMatch() {
+    void testShouldBePresentWhenUrisDoNotMatch() {
         String requestUri = "request/uri";
         String contextUri = "context/uri";
         HttpExchange exchange = getMockHttpExchange(requestUri, contextUri);
-        assertThrows(UnknownUriException.class, () -> uriValidator.validate(exchange));
+        assertTrue(uriValidator.validate(exchange).isPresent());
     }
 
 

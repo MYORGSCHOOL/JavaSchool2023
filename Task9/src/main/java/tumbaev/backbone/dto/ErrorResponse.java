@@ -1,4 +1,4 @@
-package tumbaev.backbone.exception_handler;
+package tumbaev.backbone.dto;
 
 import tumbaev.backbone.util.constant.HttpCode;
 

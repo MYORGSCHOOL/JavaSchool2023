@@ -9,21 +9,16 @@ import tumbaev.backbone.util.constant.HttpCode;
 import tumbaev.backbone.util.constant.HttpHeader;
 import tumbaev.backbone.util.constant.Mime;
 import tumbaev.backbone.validator.body_validator.RequestBodyValidatorManager;
-import tumbaev.backbone.validator.request_validator.HttpRequestValidatorManager;
+import tumbaev.backbone.validator.request_validator.HttpRequestValidator;
 import tumbaev.dto.CheckBracketsRequest;
 import tumbaev.dto.CheckBracketsResponse;
-import tumbaev.exception_handler.body_handler.BlankTextExceptionHandler;
-import tumbaev.exception_handler.body_handler.JsonConversionExceptionHandler;
-import tumbaev.exception_handler.body_handler.TextLengthExceptionHandler;
-import tumbaev.exception_handler.body_handler.BlankBodyExceptionHandler;
-import tumbaev.exception_handler.request_handler.MethodNotAllowedExceptionHandler;
-import tumbaev.exception_handler.request_handler.UnknownUriExceptionHandler;
-import tumbaev.exception_handler.request_handler.UnsupportedMediaTypeExceptionHandler;
-import tumbaev.validtor.body_validator.TextLengthValidator;
-import tumbaev.validtor.body_validator.TextNotBlankValidator;
-import tumbaev.validtor.request_validator.MediaTypeValidator;
-import tumbaev.validtor.request_validator.PostMethodValidator;
-import tumbaev.validtor.request_validator.UriValidator;
+import tumbaev.exception_handler.BlankBodyExceptionHandler;
+import tumbaev.exception_handler.BlankTextExceptionHandler;
+import tumbaev.exception_handler.JsonConversionExceptionHandler;
+import tumbaev.exception_handler.TextLengthExceptionHandler;
+import tumbaev.validator.request_validator.MediaTypeValidator;
+import tumbaev.validator.request_validator.PostMethodValidator;
+import tumbaev.validator.request_validator.UriValidator;
 
 import java.util.List;
 import java.util.Map;
@@ -34,22 +29,24 @@ public class CheckBracketsHandler extends AbstractHttpHandler {
     private final CheckBracketsService checkBracketsService = new CheckBracketsService();
 
     public CheckBracketsHandler() {
-        super(
-                new ExceptionHandlerManager(
-                        List.of(new BlankBodyExceptionHandler(),
-                                new BlankTextExceptionHandler(), new TextLengthExceptionHandler(),
-                                new JsonConversionExceptionHandler(), new MethodNotAllowedExceptionHandler(),
-                                new UnknownUriExceptionHandler(), new UnsupportedMediaTypeExceptionHandler())
-                ),
-                new HttpRequestValidatorManager(
-                        List.of(new UriValidator(), new PostMethodValidator(), new MediaTypeValidator())
-                )
-        );
+        super(new ExceptionHandlerManager(List.of(
+                new BlankBodyExceptionHandler(),
+                new BlankTextExceptionHandler(),
+                new TextLengthExceptionHandler(),
+                new JsonConversionExceptionHandler())
+        ));
 
-        this.bodyValidator = new RequestBodyValidatorManager<>(
-                List.of(new TextNotBlankValidator(), new TextLengthValidator()),
-                CheckBracketsRequest.class
-        );
+        HttpRequestValidator uriValidator = new UriValidator();
+        HttpRequestValidator methodValidator = new PostMethodValidator();
+        HttpRequestValidator mediaTypeValidator = new MediaTypeValidator();
+
+        uriValidator.setNextValidator(methodValidator);
+        methodValidator.setNextValidator(mediaTypeValidator);
+
+        this.setFirstValidator(uriValidator);
+
+
+        this.bodyValidator = new RequestBodyValidatorManager<>(List.of(), CheckBracketsRequest.class);
     }
 
     @Override

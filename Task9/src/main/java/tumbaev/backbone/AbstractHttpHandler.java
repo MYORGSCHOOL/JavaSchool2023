@@ -5,6 +5,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import tumbaev.backbone.exception_handler.AbstractExceptionHandler;
 import tumbaev.backbone.exception_handler.ExceptionHandlerManager;
+import tumbaev.backbone.validator.request_validator.HttpRequestValidator;
 import tumbaev.backbone.validator.request_validator.HttpRequestValidatorManager;
 
 import java.io.IOException;
@@ -20,9 +21,13 @@ public abstract class AbstractHttpHandler implements HttpHandler {
     private final ExceptionHandlerManager exceptionHandler;
     private final HttpRequestValidatorManager requestValidator;
 
-    protected AbstractHttpHandler(ExceptionHandlerManager exceptionHandler, HttpRequestValidatorManager requestValidator) {
+    protected AbstractHttpHandler(ExceptionHandlerManager exceptionHandler) {
         this.exceptionHandler = exceptionHandler;
-        this.requestValidator = requestValidator;
+        this.requestValidator = new HttpRequestValidatorManager();
+    }
+
+    protected void setFirstValidator(HttpRequestValidator firstValidator) {
+        this.requestValidator.setFirstValidator(firstValidator);
     }
 
     /**
@@ -41,8 +46,8 @@ public abstract class AbstractHttpHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         ResponseEntity response;
         try {
-            requestValidator.validate(exchange);
-            response = process(exchange);
+            response = requestValidator.proceedValidation(exchange)
+                    .orElseGet(() -> process(exchange));
         } catch (Throwable e) {
             response = exceptionHandler.handle(e);
         }

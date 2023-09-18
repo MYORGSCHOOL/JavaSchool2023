@@ -1,4 +1,4 @@
-package tumbaev.validtor.body_validator;
+package tumbaev.validator.body_validator;
 
 import org.junit.jupiter.api.Test;
 import tumbaev.dto.CheckBracketsRequest;

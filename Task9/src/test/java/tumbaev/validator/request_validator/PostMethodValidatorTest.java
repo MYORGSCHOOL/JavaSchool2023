@@ -1,33 +1,31 @@
-package tumbaev.validtor.request_validator;
+package tumbaev.validator.request_validator;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpPrincipal;
 import org.junit.jupiter.api.Test;
-import tumbaev.exception.MethodNotAllowedException;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.URI;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PostMethodValidatorTest {
     PostMethodValidator methodValidator = new PostMethodValidator();
 
     @Test
-    void testShouldNotThrowExceptionWhenMethodIsPost() {
+    void testShouldBeEmptyWhenMethodIsPost() {
         HttpExchange exchange = getMockHttpExchange("POST");
-        assertDoesNotThrow(() -> methodValidator.validate(exchange));
+        assertTrue(methodValidator.validate(exchange).isEmpty());
     }
 
     @Test
-    void testShouldThrowExceptionWhenMethodInNotPost() {
+    void testShouldBePresentWhenMethodInNotPost() {
         HttpExchange exchange = getMockHttpExchange("GET");
-        assertThrows(MethodNotAllowedException.class, () -> methodValidator.validate(exchange));
+        assertTrue(methodValidator.validate(exchange).isPresent());
     }
 
     /**
