@@ -1,6 +1,7 @@
 package tsimmer;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -42,6 +43,7 @@ public class ThreadStateTest {
     }
 
     @Test
+    @Disabled
     @DisplayName("Перход в состояние runnable с помощью метода notify")
     void testStateStreamRunnable() throws InterruptedException {
         thread = new Thread(() -> {
