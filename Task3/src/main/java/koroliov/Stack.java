@@ -2,8 +2,23 @@ package koroliov;
 
 import java.util.LinkedList;
 
+
+/**
+ * A class that implements the stack.
+ * @author Nikita Koroliov
+ * @version 1.1
+ */
 public class Stack {
-    private LinkedList<Object> stack = new LinkedList<>();
+    private final LinkedList<Object> stack;
+
+    public Stack() {
+        this.stack = new LinkedList<>();
+    }
+
+    public Stack(String str) {
+        this.stack = new LinkedList<>();
+        this.stack.addFirst(str);
+    }
 
     /**
      * The method adds an element to the stack.
@@ -11,7 +26,8 @@ public class Stack {
      * The method adds the passed element to the beginning of the stack.
      * @param obj An add-to-stack element.
      */
-    public void Push(Object obj) {
+
+    public void push(Object obj) {
         this.stack.addFirst(obj);
     }
 
@@ -21,7 +37,8 @@ public class Stack {
      * The method returns the removed element of the beginning of the stack.
      * @return Object Deleted Item.
      */
-    public Object Pop() {
+
+    public Object pop() {
         return this.stack.removeFirst();
     }
 
@@ -42,7 +59,8 @@ public class Stack {
      * The method returns the initial element from the stack without deleting it.
      * @return Object Item.
      */
-    public Object Top() {
+
+    public Object top() {
         return this.stack.getFirst();
     }
 
