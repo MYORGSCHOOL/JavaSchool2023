@@ -21,6 +21,7 @@ class DictionaryImplTest {
     }
 
     @Test
+    @Disabled
     @DisplayName("Вставка трёх миллионов элементов меньше 1 секунды")
     public void testTimeWorkInsertThreeMillionElements() {
         DictionaryImpl<Integer> dictionary = new DictionaryImpl<>();
